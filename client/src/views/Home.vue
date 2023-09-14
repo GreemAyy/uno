@@ -1,9 +1,14 @@
-<template lang="ts" setup>
+<script lang="ts" setup>
+//@ts-ignore
+import HomeHeader from '../components/home/HomeHeader.vue'
+//@ts-ignore
+import GamesList from '../components/home/GamesList.vue'
 
-</template>
+</script>
 
 <template lang="pug">
-
+HomeHeader()
+GamesList()
 </template>
 
 <style lang="scss">

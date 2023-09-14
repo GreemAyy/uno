@@ -9,7 +9,7 @@ export function queryCreateGame({body,deck}:{body:ReqBodyCreateGame,deck:IDeck})
 }
 
 export function queryCheckUserHaveGames(id:number){
-    return `SELECT * FROM game WHERE (player_1_id=${id} or player_2_id=${id} OR player_3_id=${id} or player_4_id=${id} OR player_5_id=${id}) and (status='wait' or status='game')`
+    return `SELECT id FROM game WHERE (player_1_id=${id} or player_2_id=${id} OR player_3_id=${id} or player_4_id=${id} OR player_5_id=${id}) and (status='wait' or status='game')`
 }
 
 export function queryUpdateId(idx:number,player_id:number,game_id:number){
@@ -18,4 +18,8 @@ export function queryUpdateId(idx:number,player_id:number,game_id:number){
 
 export function queryChangeStatus(id:number,status:string){
     return `UPDATE game set status='${status}' WHERE id = ${id}`
+}
+
+export function queryGetGames(){
+    return 'SELECT `id`, `player_count`, `status`, `player_1_id`, `player_2_id`, `player_3_id`, `player_4_id`, `player_5_id` from game where status != "end"'
 }

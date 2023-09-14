@@ -1,6 +1,6 @@
 import { generateDeck,type ICard } from "../../gameFuncs/generate";
 import { app, DB } from "../..";
-import { queryChangeStatus, queryCheckUserHaveGames, queryCreateGame, queryUpdateId } from "./home.path";
+import { queryChangeStatus, queryCheckUserHaveGames, queryCreateGame, queryGetGames, queryUpdateId } from "./home.path";
 
 export interface IGame {
     id:            number;
@@ -21,19 +21,28 @@ export interface IGame {
     game_zone:     ICard[];
     status:        string;
 }
-
 export interface ReqBodyCreateGame{
     player_count:number
     player_1_id:number
 }
-
 interface ReqBodyConnectGame{
     id:number,
     player_id:number
 }
 
+export async function getGames(){
+    app.get('/api/game/get',async(req,res)=>{
+        const getGames = await DB.query(queryGetGames())
+        res.send(
+            getGames?.error?
+            {status:400,responseText:'error'}:
+            {status:200,responseText:'done',data:getGames?.result}
+        )
+    })
+}
+
 export async function createGame(){
-    app.post('/api/create/game', async(req,res)=>{
+    app.post('/api/game/create', async(req,res)=>{
         const body:ReqBodyCreateGame = req.body
         const query = queryCreateGame({body,deck:generateDeck(body.player_count)})
         if(await checkUserHaveGames(body.player_1_id))
@@ -50,20 +59,19 @@ export async function createGame(){
 }
 
 export async function connectGame(){
-    app.post('/api/connect/game', async(req,res)=>{
+    app.post('/api/game/connect', async(req,res)=>{
         const body :ReqBodyConnectGame = req.body
         const checkUser = await checkUserHaveGames(body.player_id)
         const game :IGame = await (await getGame(body.id))?.result[0]
         if(game){
             if(checkUser?.id==body.id)
                 res.send({status:200,responseText:'connected'})
-            else{
+            else if(!checkUser){
                 const conn = await connect(game, body.player_id)
                 res.send({status:200,responseText:conn})
-            } 
+            }else
+                res.send({status:200,responseText:'already'})
         }
-        else if(checkUser)
-            res.send({status:200,responseText:'have'})
         else
             res.send({status:404,responseText:'error'})
     })

@@ -1,14 +1,16 @@
 <script setup lang="ts">
-
+import BottomNotify from './UI/BottomNotify.vue';
 </script>
 
 <template>
-
+  <BottomNotify/>
+  <Router-view/>
 </template>
 
-<style >
+<style>
 *{
-  margin:  0;
+  font-family: 'Montserrat Alternates', sans-serif;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }

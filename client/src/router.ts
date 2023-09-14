@@ -5,7 +5,10 @@ const router = createRouter({
     routes:[
         {path:"/home",
         /*@ts-ignore*/
-        component:()=>import('./views/Home.vue')}
+        component:()=>import('./views/Home.vue')},
+        {path:'/game/:id',
+        /*@ts-ignore*/
+        component:()=>import('./views/Game.vue')}
     ]
 })
 
