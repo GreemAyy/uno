@@ -63,6 +63,11 @@ export async function connectGame(){
         const body :ReqBodyConnectGame = req.body
         const checkUser = await checkUserHaveGames(body.player_id)
         const game :IGame = await (await getGame(body.id))?.result[0]
+        console.log(body)
+        if(body.player_id==null) {
+            res.send({status:404,responseText:'error'})
+            return 
+        }
         if(game){
             if(checkUser?.id==body.id)
                 res.send({status:200,responseText:'connected'})

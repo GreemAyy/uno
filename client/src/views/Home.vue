@@ -3,7 +3,6 @@
 import HomeHeader from '../components/home/HomeHeader.vue'
 //@ts-ignore
 import GamesList from '../components/home/GamesList.vue'
-
 </script>
 
 <template lang="pug">

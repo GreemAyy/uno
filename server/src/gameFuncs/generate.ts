@@ -11,6 +11,7 @@ export interface IDeck{
     player_4_deck?:ICard[]
     player_5_deck?:ICard[]
     total_deck?:ICard[]
+    game_zone?:ICard[]
 }
 
 function shake<T>(list:T[]){
@@ -37,22 +38,23 @@ export const generateDeck=(playersCount:number)=>{
         //@ts-ignore
         total[T]=deck.splice(0,6)
     }
+    total.game_zone=deck.splice(0,1)
     total.total_deck=deck
     return total
 }
 
 const gen = () => {
-    const values = [0,1,2,3,4,5,6,7,8,9,'change_direction','plus_2'];
+    const values = [0,1,2,3,4,5,6,7,8,9,'change_direction','plus_2','skip_move'];
     const colors = ['red','green','blue','yellow'];
-    const deck:ICard[]= []
+    const deck:ICard[] = []
     for(let value of values){
         const item = colors.map(item=>({color:item,value}))
         deck.push(...item)
     }
-    for(let i =0 ;i<4;i++){
+    for(let i =0 ;i<2;i++){
         deck.push(
             {color:'black',pickedColor:null,value:"change_color"},
-            {color:'black',pickedColor:null,value:"plus_4"},
+            {color:'black',value:"plus_4"},
         )
     }
     return [...deck,...deck]

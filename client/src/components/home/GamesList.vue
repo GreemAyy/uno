@@ -43,6 +43,8 @@ const create=async()=>{
             store.commit("setBottomNotify",{isOpen:true,status:"error",data:'У вас уже есть начатая игра!'})
         isOpen.value=false
     }
+    else
+    store.commit("setBottomNotify",{isOpen:true,status:"error",data:'Сначала войдите!'})
 }
 </script>
 

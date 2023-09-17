@@ -5,7 +5,7 @@ const js = (array:any[]|undefined)=> array==undefined?JSON.stringify([]):JSON.st
 
 export function queryCreateGame({body,deck}:{body:ReqBodyCreateGame,deck:IDeck}){
     return `INSERT INTO game (id, player_count, player_move, direction, total_deck, player_1_id, player_2_id, player_3_id, player_4_id, player_5_id, player_1_deck,player_2_deck, player_3_deck, player_4_deck, player_5_deck, game_zone, status) 
-    VALUES (null, ${body.player_count}, 1 ,'by', '${js(deck.total_deck)}' ,${body.player_1_id},0 ,0 ,0 ,0, '${js(deck.player_1_deck)}','${js(deck.player_2_deck)}','${js(deck.player_3_deck)}','${js(deck.player_4_deck)}','${js(deck.player_5_deck)}','[]','wait')`
+    VALUES (null, ${body.player_count}, 1 ,'by', '${js(deck.total_deck)}' ,${body.player_1_id},0 ,0 ,0 ,0, '${js(deck.player_1_deck)}','${js(deck.player_2_deck)}','${js(deck.player_3_deck)}','${js(deck.player_4_deck)}','${js(deck.player_5_deck)}','${js(deck.game_zone)}','wait')`
 }
 
 export function queryCheckUserHaveGames(id:number){

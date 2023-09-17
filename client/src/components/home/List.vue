@@ -26,6 +26,10 @@ const find = (item:IListItem)=>{
 }
 
 const connect=async(item:IListItem)=>{
+    if(store.state.userStore.id==null) {
+        store.commit("setBottomNotify",{isOpen:true,status:"error",data:'Войдите в аккаунт'})
+        return false
+    }
     const connectToGame = await connectGame(item.id,store.state.userStore.id)
     if(connectToGame.responseText=='connected'){
         props.socket.emit("update")
